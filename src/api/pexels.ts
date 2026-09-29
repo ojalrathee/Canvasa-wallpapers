@@ -22,7 +22,10 @@ const pexelsApi = axios.create({
   },
 });
 
-export const getCuratedWallpapers = async (page = 1, perPage = 30): Promise<PexelsResponse> => {
+export const getCuratedWallpapers = async (page = 1, perPage = 30, filters?: SearchFilters): Promise<PexelsResponse> => {
+  if (filters && Object.keys(filters).length > 0) {
+    return searchWallpapers('wallpapers', page, perPage, filters);
+  }
   const response = await pexelsApi.get('/curated', {
     params: { page, per_page: perPage },
   });

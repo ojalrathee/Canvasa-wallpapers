@@ -4,7 +4,9 @@ import type { Photo } from '../types';
 import { ImageCard } from '../components/ImageCard';
 import { ImageModal } from '../components/ImageModal';
 import { CategoryTabs } from '../components/CategoryTabs';
+import { OrientationTags } from '../components/OrientationTags';
 import { Loader2 } from 'lucide-react';
+import type { SearchFilters } from '../api/pexels';
 
 export const Home = () => {
   const [photos, setPhotos] = useState<Photo[]>([]);
@@ -13,16 +15,24 @@ export const Home = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null);
+  const [filters, setFilters] = useState<SearchFilters>({});
   
   const loadingRef = useRef(false);
 
-  const fetchWallpapers = useCallback(async (pageNum: number) => {
+  // Reset page when filters change
+  useEffect(() => {
+    setPhotos([]);
+    setPage(1);
+    initialPageRef.current = 1;
+  }, [filters]);
+
+  const fetchWallpapers = useCallback(async (pageNum: number, currentFilters: SearchFilters) => {
     if (loadingRef.current) return;
     loadingRef.current = true;
     setLoading(true);
     
     try {
-      const data = await getCuratedWallpapers(pageNum);
+      const data = await getCuratedWallpapers(pageNum, 30, currentFilters);
       setPhotos(prev => pageNum === initialPageRef.current ? data.photos : [...prev, ...data.photos]);
     } catch (err: any) {
       setError(err.response?.status === 401 ? 'Please configure your PEXELS_API_KEY in .env file.' : 'Failed to fetch wallpapers.');
@@ -33,8 +43,8 @@ export const Home = () => {
   }, []);
 
   useEffect(() => {
-    fetchWallpapers(page);
-  }, [page, fetchWallpapers]);
+    fetchWallpapers(page, filters);
+  }, [page, filters, fetchWallpapers]);
 
   // Infinite scroll implementation using IntersectionObserver
   const observerTarget = useRef<HTMLDivElement>(null);
@@ -59,6 +69,10 @@ export const Home = () => {
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold mb-4">Curated For You</h1>
       <CategoryTabs />
+      <OrientationTags 
+        selected={filters.orientation || ''} 
+        onSelect={(o) => setFilters(prev => ({ ...prev, orientation: o || undefined }))} 
+      />
       
       {error ? (
         <div className="p-4 bg-red-100 text-red-700 rounded-lg border border-red-200">

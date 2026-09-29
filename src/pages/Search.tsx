@@ -5,6 +5,7 @@ import type { Photo } from '../types';
 import { ImageCard } from '../components/ImageCard';
 import { ImageModal } from '../components/ImageModal';
 import { CategoryTabs } from '../components/CategoryTabs';
+import { OrientationTags } from '../components/OrientationTags';
 import { Loader2, Filter, X } from 'lucide-react';
 
 const COLORS = [
@@ -93,6 +94,10 @@ export const SearchPage = () => {
       <div className="mb-4">
         <h1 className="text-3xl font-bold capitalize mb-4">Results for "{query}"</h1>
         <CategoryTabs />
+        <OrientationTags 
+          selected={filters.orientation || ''} 
+          onSelect={(o) => setFilters(prev => ({ ...prev, orientation: o || undefined }))} 
+        />
       </div>
       
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
@@ -123,21 +128,7 @@ export const SearchPage = () => {
             )}
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-muted-foreground">Orientation</label>
-              <select 
-                className="w-full bg-muted border-transparent rounded-lg p-2.5 outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all cursor-pointer"
-                value={filters.orientation || ''}
-                onChange={(e) => handleFilterChange('orientation', e.target.value)}
-              >
-                <option value="">Any Orientation</option>
-                <option value="landscape">Landscape</option>
-                <option value="portrait">Portrait</option>
-                <option value="square">Square</option>
-              </select>
-            </div>
-            
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
               <label className="text-sm font-medium text-muted-foreground">Size</label>
               <select 
