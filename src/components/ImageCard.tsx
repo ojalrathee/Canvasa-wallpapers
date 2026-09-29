@@ -1,4 +1,3 @@
-import React from 'react';
 import { Download, Maximize2 } from 'lucide-react';
 import type { Photo } from '../types';
 
@@ -19,8 +18,8 @@ export const ImageCard: React.FC<ImageCardProps> = ({ photo, onClick }) => {
         alt={photo.alt || 'Wallpaper'}
         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
         loading="lazy"
-        // Using fetchpriority as recommended in modern-web-guidance
-        fetchpriority="auto" 
+        // Using fetchPriority as recommended in modern-web-guidance
+        fetchPriority="auto" 
       />
       
       {/* Overlay */}

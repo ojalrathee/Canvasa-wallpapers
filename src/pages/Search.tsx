@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback, useRef } from 'react';
+import { useEffect, useState, useCallback, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { searchWallpapers, type SearchFilters } from '../api/pexels';
 import type { Photo } from '../types';

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback, useRef } from 'react';
+import { useEffect, useState, useCallback, useRef } from 'react';
 import { getCuratedWallpapers } from '../api/pexels';
 import type { Photo } from '../types';
 import { ImageCard } from '../components/ImageCard';
