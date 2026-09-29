@@ -1,0 +1,92 @@
+@import "tailwindcss";
+
+@theme {
+  --color-background: #09090b;
+  --color-foreground: #fafafa;
+  
+  --color-muted: #27272a;
+  --color-muted-foreground: #a1a1aa;
+
+  --color-card: #09090b;
+  --color-card-foreground: #fafafa;
+
+  --color-border: #27272a;
+  --color-input: #27272a;
+
+  --color-primary: #fafafa;
+  --color-primary-foreground: #18181b;
+}
+
+.light {
+  --color-background: #ffffff;
+  --color-foreground: #09090b;
+  
+  --color-muted: #f4f4f5;
+  --color-muted-foreground: #71717a;
+
+  --color-card: #ffffff;
+  --color-card-foreground: #09090b;
+
+  --color-border: #e4e4e7;
+  --color-input: #e4e4e7;
+
+  --color-primary: #18181b;
+  --color-primary-foreground: #fafafa;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+.masonry-grid {
+  columns: 2 150px;
+  column-gap: 1rem;
+}
+@media (min-width: 640px) {
+  .masonry-grid {
+    columns: 3 200px;
+  }
+}
+@media (min-width: 1024px) {
+  .masonry-grid {
+    columns: 4 250px;
+  }
+}
+@media (min-width: 1280px) {
+  .masonry-grid {
+    columns: 5 250px;
+  }
+}
+
+.masonry-item {
+  break-inside: avoid;
+  margin-block-end: 1rem;
+}
+
+/* Image optimization guidance from modern-web-guidance */
+.image-loading {
+  background-color: var(--color-muted);
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: .5;
+  }
+}
